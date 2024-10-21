@@ -1,0 +1,33 @@
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+body {
+  @apply bg-pastel-white text-gray-800;
+}
+
+.btn {
+  @apply px-4 py-2 rounded-full shadow-sm transition duration-300 ease-in-out;
+}
+
+.btn-primary {
+  @apply bg-pastel-pink hover:bg-pink-400 text-gray-800;
+}
+
+.btn-secondary {
+  @apply bg-gray-200 hover:bg-gray-300 text-gray-800;
+}
+
+a {
+  @apply text-pink-600 hover:text-pink-800 transition duration-300 ease-in-out;
+}
+
+.cart-enter-active,
+.cart-leave-active {
+  transition: transform 0.3s ease-out;
+}
+
+.cart-enter-from,
+.cart-leave-to {
+  transform: translateX(100%);
+}
