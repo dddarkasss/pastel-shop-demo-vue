@@ -33,9 +33,7 @@
 import { ref, onMounted, computed } from 'vue';
 import { useRoute } from 'vue-router';
 import { faker } from '@faker-js/faker';
-import { useNotification } from '@kyvg/vue3-notification';
 
-const { notify } = useNotification();
 const route = useRoute();
 const product = ref<any>(null);
 const additionalImages = ref<string[]>([]);
@@ -63,11 +61,6 @@ onMounted(() => {
 
 function addToCart() {
   emit('add-to-cart', { id: product.value.id, title: product.value.title, price: product.value.price });
-  notify({
-    title: 'Added to Cart',
-    text: `${product.value.title} has been added to your cart.`,
-    type: 'success'
-  });
 }
 
 const emit = defineEmits(['add-to-cart']);

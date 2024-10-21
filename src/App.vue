@@ -5,6 +5,7 @@
         <h1 class="text-2xl font-bold">Pastel Shop</h1>
         <nav>
           <router-link to="/" class="mr-4">Home</router-link>
+          <router-link to="/about" class="mr-4">About</router-link>
           <button @click="toggleCart" class="btn btn-secondary">
             Cart ({{ cartItemCount }})
           </button>
@@ -18,7 +19,7 @@
       <router-view class="flex-grow" @add-to-cart="addToCart"></router-view>
       
       <transition name="cart">
-        <aside v-if="isCartOpen" class="w-1/4 bg-white p-4 shadow-lg fixed right-0 top-0 h-full overflow-y-auto">
+        <aside ref="target" v-if="isCartOpen" class="w-1/4 bg-white p-4 shadow-lg fixed right-0 top-0 h-full overflow-y-auto">
           <h2 class="text-xl font-bold mb-4">Your Cart</h2>
           <div v-for="item in cart" :key="item.id" class="mb-4">
             <h3>{{ item.title }}</h3>
@@ -45,6 +46,13 @@
 import { ref, computed } from 'vue';
 import { useNotification } from '@kyvg/vue3-notification';
 import BannerCarousel from './components/BannerCarousel.vue';
+import { onClickOutside } from '@vueuse/core'
+
+const target = ref(null)
+
+onClickOutside(target, () => {
+  isCartOpen.value = false;
+})
 
 const { notify } = useNotification();
 
@@ -66,6 +74,7 @@ function toggleCart() {
 }
 
 function addToCart(product: { id: string; title: string; price: number }) {
+  console.log('Adding to cart:', product)
   const existingItem = cart.value.find(item => item.id === product.id);
   if (existingItem) {
     existingItem.quantity++;
@@ -89,6 +98,10 @@ function updateQuantity(id: string, change: number) {
   }
 }
 
+/**
+ * Remove an item from the cart.
+ * @param id The ID of the item to remove.
+ */
 function confirmRemoveItem(id: string) {
   if (confirm('Are you sure you want to remove this item from your cart?')) {
     cart.value = cart.value.filter(i => i.id !== id);

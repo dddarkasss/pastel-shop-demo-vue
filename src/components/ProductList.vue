@@ -23,9 +23,6 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
 import { faker } from '@faker-js/faker';
-import { useNotification } from '@kyvg/vue3-notification';
-
-const { notify } = useNotification();
 
 interface Product {
   id: string;
@@ -60,11 +57,6 @@ function toggleView() {
 
 function addToCart(product: Product) {
   emit('add-to-cart', { id: product.id, title: product.title, price: product.price });
-  notify({
-    title: 'Added to Cart',
-    text: `${product.title} has been added to your cart.`,
-    type: 'success'
-  });
 }
 
 const emit = defineEmits(['add-to-cart']);
